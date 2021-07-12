@@ -114,9 +114,7 @@ func Register(c *gin.Context) {
 		if err != nil {
 			c.JSON(http.StatusOK, serializer.Err(-1, err))
 		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"Code": 0,
-			})
+			c.JSON(http.StatusOK, serializer.Success())
 		}
 	} else {
 		c.JSON(http.StatusOK, err)
