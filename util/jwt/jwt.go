@@ -37,6 +37,7 @@ func Get(c *gin.Context) (uint, error) {
 	if len(tokenString) == 0 {
 		return 0, errors.New("已登出")
 	}
+	fmt.Println(tokenString)
 	if err != nil {
 		return 0, err
 	}
