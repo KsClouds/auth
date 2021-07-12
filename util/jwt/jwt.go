@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -33,6 +34,9 @@ func parseToken(tokenString string) (jwt.MapClaims, error) {
 
 func Get(c *gin.Context) (uint, error) {
 	tokenString, err := c.Cookie(HEADER)
+	if len(tokenString) == 0 {
+		return 0, errors.New("已登出")
+	}
 	if err != nil {
 		return 0, err
 	}
