@@ -10,10 +10,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const DEFAULT_PASSWORD = "12345678"
+
 type UserRegisterService struct {
 	Nickname string `form:"nickname" json:"nickname" binding:"required,min=2,max=10"`
 	Username string `form:"username" json:"username" binding:"required,min=5,max=30"`
-	Password string `form:"password" json:"password" binding:"required,min=8,max=40"`
+	Password string `form:"password" json:"password" binding:"max=40"`
 	Superior uint   `form:"superior" json:"superior"`
 }
 
@@ -22,6 +24,9 @@ func (service *UserRegisterService) Register() error {
 	models.DB.Model(&models.User{}).Where("username = ?", service.Username).Count(&count)
 	if count > 0 {
 		return errors.New("账号已存在")
+	}
+	if len(service.Password) == 0 {
+		service.Password = DEFAULT_PASSWORD
 	}
 	var digest, err = util.Digest(service.Password)
 	if err != nil {
@@ -77,7 +82,7 @@ func (service *UserPasswordService) ChangePassword(c *gin.Context, user models.U
 }
 
 func ResetPassword(c *gin.Context) error {
-	var digest, err = util.Digest("12345678")
+	var digest, err = util.Digest(DEFAULT_PASSWORD)
 	if err != nil {
 		return err
 	}
