@@ -15,6 +15,7 @@ func StartRouter() (router *gin.Engine) {
 	user.GET("/checkStatus", api.CheckStatus)
 	user.POST("/login", api.Login)
 	user.POST("/register", api.Register)
+	user.DELETE("/logout", api.Logout)
 
 	user.Use(AuthRequired())
 	user.PUT("password", api.ChangePassword)

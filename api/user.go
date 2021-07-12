@@ -120,3 +120,8 @@ func Register(c *gin.Context) {
 		c.JSON(http.StatusOK, err)
 	}
 }
+
+func Logout(c *gin.Context) {
+	jwt.Exp(c)
+	c.JSON(http.StatusOK, serializer.Success())
+}

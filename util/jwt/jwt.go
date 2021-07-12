@@ -56,3 +56,7 @@ func Set(c *gin.Context, uid uint) {
 	}
 	c.SetCookie(HEADER, tokenString, 7*24*60*60, "/", "", false, true)
 }
+
+func Exp(c *gin.Context) {
+	c.SetCookie(HEADER, "", 0, "/", "", false, true)
+}
