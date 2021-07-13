@@ -48,6 +48,7 @@ func DeleteUser(c *gin.Context) {
 	err := service.DeleteUser(c)
 	if err != nil {
 		c.JSON(http.StatusOK, serializer.Err(-1, err))
+		return
 	}
 	c.JSON(http.StatusOK, serializer.Success())
 }
