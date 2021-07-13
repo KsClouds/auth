@@ -113,6 +113,12 @@ func ChangeSuperior(c *gin.Context) error {
 }
 
 func DeleteUser(c *gin.Context) error {
+	user := &models.User{}
+	uid := c.GetUint("uid")
+	models.DB.Where("id = ?", uid).First(&user)
+	if user.Role != "admin" {
+		return errors.New("无权删除")
+	}
 	return models.DB.Where("id = ?", c.Param("id")).Delete(&models.User{}).Error
 }
 

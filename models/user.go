@@ -10,6 +10,7 @@ type User struct {
 	Username string
 	Nickname string
 	Password string
+	Role     string
 }
 
 // 校验密码
